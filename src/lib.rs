@@ -91,14 +91,14 @@ impl NRTMParser for NRTMV3Parser {
 #[cfg(feature = "async-streaming")]
 impl<T: AsyncRead> StreamingNRTMParser<T> for NRTMV2Parser {
     fn reader_from(reader: T) -> impl StreamExt<Item = Result<NRTMMessage, ParseError>> {
-        FramedRead::new(reader, streaming::NRTMDec::new_v3())
+        FramedRead::new(reader, streaming::NRTMDec::new_v2())
     }
 }
 
 #[cfg(feature = "async-streaming")]
 impl<T: AsyncRead> StreamingNRTMParser<T> for NRTMV3Parser {
     fn reader_from(reader: T) -> impl StreamExt<Item = Result<NRTMMessage, ParseError>> {
-        FramedRead::new(reader, streaming::NRTMDec::new_v2())
+        FramedRead::new(reader, streaming::NRTMDec::new_v3())
     }
 }
 
