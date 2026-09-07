@@ -14,22 +14,33 @@ async fn parse_message_stream_example() {
         .unwrap();
     let mut parser = NRTMV3Parser::reader_from(nrtmv3_sample);
 
-    while let Some(Ok(nrtm_message)) = parser.next().await {
-        match nrtm_message.update {
-            OpType::V2(_) => {} // ignore v2
-            OpType::V3(verb, serial) => match verb {
-                Verb::ADD => {
-                    println!(
-                        "operation {serial}, adding rpsl object {}",
-                        nrtm_message.rpsl
-                    );
-                }
-                Verb::DEL => {
-                    println!(
-                        "operation {serial}, deleting rpsl object {}",
-                        nrtm_message.rpsl
-                    );
-                }
+    loop {
+        let optional_result = parser.next().await;
+
+        match optional_result {
+            None => {} // end of stream
+            Some(result) => match result {
+                Ok(nrtm_message) => match nrtm_message.update {
+                    OpType::V2(_) => {} // ignore v2
+                    OpType::V3(verb, serial) => match verb {
+                        Verb::ADD => {
+                            println!(
+                                "operation {serial}, adding rpsl object {}",
+                                nrtm_message.rpsl
+                            );
+                        }
+                        Verb::DEL => {
+                            println!(
+                                "operation {serial}, deleting rpsl object {}",
+                                nrtm_message.rpsl
+                            );
+                        }
+                    },
+                },
+                Err(error) => panic!(
+                    "should have parsed successfully but received error {:?}",
+                    error
+                ),
             },
         }
     }
