@@ -18,7 +18,7 @@ async fn parse_message_stream_example() {
         let optional_result = parser.next().await;
 
         match optional_result {
-            None => {} // end of stream
+            None => break, // end of stream
             Some(result) => match result {
                 Ok(nrtm_message) => match nrtm_message.update {
                     OpType::V2(_) => {} // ignore v2
