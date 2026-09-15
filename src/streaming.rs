@@ -3,6 +3,7 @@ use tokio_util::bytes::{Buf, BytesMut};
 use tokio_util::codec::Decoder;
 
 const MIN_BUFFER_LEN: usize = 8192;
+const MIN_DECODE_LEN: usize = "ADD 1".len();
 
 #[derive(Clone)]
 pub struct NRTMDec {
@@ -33,10 +34,15 @@ impl Decoder for NRTMDec {
         // from_utf8 is no-copy
         let str = String::from_utf8(src.to_vec()).map_err(ParseError::NonUTF8Input)?;
 
+        // bail early if buffer is empty, as a parser run on empty and / or undecidable str
+        // is a waste of cycles and may yield errors
+        if src.is_empty() || src.len() <= MIN_DECODE_LEN {
+            return Ok(None);
+        }
+
         match (self.parser)(str.as_str()) {
             Ok(message) => {
                 src.advance(message.span.end_b);
-                // implicit drop for message_str and message_bytes
                 Ok(Some(message))
             }
             // per tokio-util codec documentation,
