@@ -107,7 +107,7 @@ mod tests {
                 _ => panic!("incorrect update {:?}", res.update),
             }
         }
-        assert_eq!(linear_id_counter, 65776784); // last object id
+        assert_eq!(linear_id_counter, 65776785); // last object id
     }
 
     #[tokio::test]

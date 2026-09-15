@@ -506,3 +506,72 @@ remarks:        * To view the original object, please query the RIPE Database at
 remarks:        * http://www.ripe.net/whois
 remarks:        ****************************
 
+ADD 65776785
+
+aut-num:        AS62078
+as-name:        MEASUREMENT-NETWORK-SCAN
+org:            ORG-TF84-RIPE
+descr:          MEASUREMENT-NETWORK-BGP-SCAN; See https://measurement.network/ for further information.
+descr:
+descr:          ...........................................................
+descr:          . This network is part of https://measurement.network/.   .
+descr:          . The project provides network measurement infrastructure .
+descr:          . for academic researchers.                               .
+descr:          .                                                         .
+descr:          . For an overview of currently running measurements, see  .
+descr:          . our website or the more specific objects for individual .
+descr:          . networks below this prefix.                             .
+descr:          .                                                         .
+descr:          . AS62078 is used in active network measurements where    .
+descr:          . BGP OPEN messages are sent to hosts publicly listening  .
+descr:          . on tcp/179. We are using a public 16bit ASN to limit    .
+descr:          . the potential for side effects. AS62078 should never be .
+descr:          . visible in the GRT.                                     .
+descr:          . ------------------------------------------------------- .
+descr:          . To report abuse or request ranges to be excluded from   .
+descr:          . measurements, please send an email to:                  .
+descr:          .                                                         .
+descr:          . abuse@measurement.network                               .
+descr:          .                                                         .
+descr:          . or see the ABUSE-C MAC418-RIPE.                         .
+descr:          . ------------------------------------------------------- .
+descr:          . If you want to actively block measurement.network, you  .
+descr:          . can do so by blocking the following resources which are .
+descr:          . an exhaustive lists of the numbered resources and       .
+descr:          . domains we use. All infrastructure is within these      .
+descr:          . netblocks:                                              .
+descr:          .                                                         .
+descr:          . # ASN                                                   .
+descr:          . AS211286                                                .
+descr:          . AS62078                                                 .
+descr:          .                                                         .
+descr:          . # IPv4                                                  .
+descr:          . 141.39.220.0/22                                         .
+descr:          .                                                         .
+descr:          . # IPv6                                                  .
+descr:          . 2a0d:8d04::/32                                          .
+descr:          .                                                         .
+descr:          . # Domains                                               .
+descr:          . measurement.network                                     .
+descr:          ...........................................................
+descr:
+descr:          Ignore this address: desc-asn-20260913-2230@visp.wien
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+abuse-c:        AR80422-RIPE
+status:         ASSIGNED
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         WYBT-MNT
+mnt-by:         DFN-MNT
+mnt-by:         MPG-MNT
+created:        2014-02-21T12:28:46Z
+last-modified:  2026-09-13T22:30:01Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+

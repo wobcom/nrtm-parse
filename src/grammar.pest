@@ -27,8 +27,11 @@ v3_operation     = ${ nrtm_line_comments ~ leading_garbage ~ (v3_add_operation |
 
 // RPSL
 // rpsl is not completely parsed, can be passed on to rpsl-rs for complete parsing
-rpsl_key        = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "-" | "_")+ }
-rpsl_kvsep      = @{ ":" ~ no_newline_whitespace }
+// longest rpsl key is 14 chars, this length is hardcoded because it helps on the
+// decidability of completeness (ie when to stop), whereas inf number of repetitions
+// with + may lead to decidability issues with incomplete input (when streaming)
+rpsl_key        = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "-" | "_"){,14} }
+rpsl_kvsep      = @{ ":" }
 free_form       = @{ (!attr_sep ~ ANY)* }
 attr_sep        = @{ NEWLINE ~ (!line_cont ~ ANY) }
 rpsl_attr       = ${ NEWLINE ~ rpsl_key ~ rpsl_kvsep ~ free_form }
