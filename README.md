@@ -8,6 +8,9 @@ It has support for parsing in a synchronous fashion, when for instance you alrea
 
 It also has support for parsing directly from `tokio` asynchronously readable objects (i.e TCP Streams for example). You can enable this capability via the `async-streaming` feature.
 
+## MSRV
+Minimum supported rust version is 1.97.1
+
 ## Dependencies
 This crate is built on:
 - the [Pest parser](https://crates.io/crates/pest) crate
