@@ -101,9 +101,7 @@ with: double lf ending
 
 ";
 
-    let e = crate::NRTMV3Parser::try_parse(nrtmv3)
-        .err()
-        .expect("parse error expected");
+    let e = crate::NRTMV3Parser::try_parse(nrtmv3).expect_err("parse error expected");
     match e {
         ParseError::LeadingGarbage(span) => {
             assert_eq!(span.start_b, 0);
