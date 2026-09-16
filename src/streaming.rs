@@ -1,5 +1,5 @@
 use crate::{NRTMMessage, NRTMParser, NRTMV2Parser, NRTMV3Parser, ParseError};
-use tokio_util::bytes::{Buf, BytesMut};
+use tokio_util::bytes::BytesMut;
 use tokio_util::codec::Decoder;
 
 const MIN_BUFFER_LEN: usize = 8192;
@@ -42,7 +42,8 @@ impl Decoder for NRTMDec {
 
         match (self.parser)(str.as_str()) {
             Ok(message) => {
-                src.advance(message.span.end_b);
+                let _message_bytes = src.split_to(message.span.end_b);
+                // implicit drop for message_str and message_bytes
                 Ok(Some(message))
             }
             // per tokio-util codec documentation,
