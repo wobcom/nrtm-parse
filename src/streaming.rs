@@ -1,6 +1,11 @@
 use crate::{NRTMMessage, NRTMParser, NRTMV2Parser, NRTMV3Parser, ParseError};
+use re_delimiter_codec::{REDelimiterCodec, REDelimiterCodecError};
+use regex::bytes::Regex;
+use std::borrow::Cow;
+use tokio::io::AsyncRead;
+use tokio_stream::{Stream, StreamExt};
 use tokio_util::bytes::BytesMut;
-use tokio_util::codec::Decoder;
+use tokio_util::codec::{Decoder, FramedRead};
 
 const MIN_BUFFER_LEN: usize = 8192;
 const MIN_DECODE_LEN: usize = "ADD 1".len();
@@ -8,6 +13,21 @@ const MIN_DECODE_LEN: usize = "ADD 1".len();
 #[derive(Clone)]
 pub struct NRTMDec {
     parser: fn(&str) -> Result<NRTMMessage, ParseError>,
+}
+
+pub enum NRTMReaderError {
+    REDelimiterCodec(REDelimiterCodecError),
+    Parser(ParseError),
+}
+
+fn new_rpsl_preparser() -> REDelimiterCodec {
+    const MAX_CHUNK_LEN: usize = 131072; // 128k
+
+    // ok to call unwrap here, we know this will not fail
+    REDelimiterCodec::new_with_max_length(
+        Regex::new("(?R)\n[^%][^AD][^DE][^DL].*\n\n").unwrap(),
+        MAX_CHUNK_LEN,
+    )
 }
 
 impl NRTMDec {
@@ -21,6 +41,44 @@ impl NRTMDec {
         NRTMDec {
             parser: NRTMV3Parser::try_parse,
         }
+    }
+    pub fn get_stream<T: AsyncRead>(
+        &mut self,
+        reader: T,
+    ) -> impl Stream<Item = Result<NRTMMessage, NRTMReaderError>> {
+        let framed_reader = FramedRead::new(reader, new_rpsl_preparser());
+
+        framed_reader
+            .then(
+                // charset guesstimation
+                async |chunk| {
+                    match chunk {
+                        Ok(chunk) => {
+                            // todo implement charset guesstimation
+                            // 1. guesstimate charset of chunk
+
+                            // 2a. if internally consistent, then decode with charset
+                            // and send cow str. most cases no conversion will
+                            // happen and so cow will stay the same (=speed)
+
+                            // 2b. if internally inconsistent, then proceed to
+                            // lossy utf8 conversion and send back cow str. copy
+                            // will happen but as it is already internally inconsistent
+                            // copy would have been needed anyway
+
+                            Ok(Cow::from(""))
+                        },
+                        Err(e) => Err(e),
+                    }
+                },
+            )
+            .then(async |cow_str| match cow_str {
+                Ok(cow_str) => match (self.parser)(cow_str.as_ref()) {
+                    Ok(message) => Ok(message),
+                    Err(e) => Err(NRTMReaderError::Parser(e)),
+                },
+                Err(e) => Err(NRTMReaderError::REDelimiterCodec(e)),
+            })
     }
 }
 
