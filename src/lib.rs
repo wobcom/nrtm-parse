@@ -7,9 +7,13 @@ use pest_derive::Parser;
 use std::mem::discriminant;
 
 #[cfg(feature = "async-streaming")]
-mod streaming;
+pub mod streaming;
 #[cfg(feature = "async-streaming")]
-use {tokio::io::AsyncRead, tokio_stream::StreamExt, tokio_util::codec::FramedRead};
+use {
+    crate::streaming::{NRTMDec, NRTMStreamError},
+    futures_util::TryStream,
+    tokio::io::AsyncRead,
+};
 
 #[derive(Debug, Parser)]
 #[grammar = "./grammar.pest"]
@@ -61,7 +65,6 @@ pub enum ParseError {
     MalformedSerial(Span, std::num::ParseIntError),
     LeadingGarbage(Span),
     IoError(std::io::Error),
-    NonUTF8Input(std::string::FromUtf8Error),
 }
 impl From<std::io::Error> for ParseError {
     fn from(io_err: std::io::Error) -> Self {
@@ -78,34 +81,89 @@ pub trait StreamingNRTMParser<T>
 where
     T: AsyncRead,
 {
-    fn reader_from(reader: T) -> impl StreamExt<Item = Result<NRTMMessage, ParseError>>;
+    fn stream_from(
+        &mut self,
+        reader: T,
+    ) -> impl TryStream<Ok = NRTMMessage, Error = NRTMStreamError>;
 }
 
-pub struct NRTMV3Parser;
+pub struct NRTMV3Parser {
+    #[cfg(feature = "async-streaming")]
+    inner_decoder: NRTMDec,
+}
+
+#[cfg(feature = "async-streaming")]
+impl Default for NRTMV3Parser {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl NRTMV3Parser {
+    #[cfg(feature = "async-streaming")]
+    pub fn new() -> Self {
+        Self {
+            inner_decoder: NRTMDec::new_v3(),
+        }
+    }
+    #[cfg(not(feature = "async-streaming"))]
+    pub fn new() -> Self {
+        Self {}
+    }
+}
 impl NRTMParser for NRTMV3Parser {
     fn try_parse(str: &str) -> Result<NRTMMessage, ParseError> {
         try_parse_nrtm(Rule::v3_operation, str)
     }
 }
 
+pub struct NRTMV2Parser {
+    #[cfg(feature = "async-streaming")]
+    inner_decoder: NRTMDec,
+}
+
+#[cfg(feature = "async-streaming")]
+impl Default for NRTMV2Parser {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl NRTMV2Parser {
+    #[cfg(feature = "async-streaming")]
+    pub fn new() -> Self {
+        Self {
+            inner_decoder: NRTMDec::new_v2(),
+        }
+    }
+    #[cfg(not(feature = "async-streaming"))]
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+impl NRTMParser for NRTMV2Parser {
+    fn try_parse(str: &str) -> Result<NRTMMessage, ParseError> {
+        try_parse_nrtm(Rule::v2_operation, str)
+    }
+}
+
 #[cfg(feature = "async-streaming")]
 impl<T: AsyncRead> StreamingNRTMParser<T> for NRTMV2Parser {
-    fn reader_from(reader: T) -> impl StreamExt<Item = Result<NRTMMessage, ParseError>> {
-        FramedRead::new(reader, streaming::NRTMDec::new_v2())
+    fn stream_from(
+        &mut self,
+        reader: T,
+    ) -> impl TryStream<Ok = NRTMMessage, Error = NRTMStreamError> {
+        self.inner_decoder.get_stream(reader)
     }
 }
 
 #[cfg(feature = "async-streaming")]
 impl<T: AsyncRead> StreamingNRTMParser<T> for NRTMV3Parser {
-    fn reader_from(reader: T) -> impl StreamExt<Item = Result<NRTMMessage, ParseError>> {
-        FramedRead::new(reader, streaming::NRTMDec::new_v3())
-    }
-}
-
-pub struct NRTMV2Parser;
-impl NRTMParser for NRTMV2Parser {
-    fn try_parse(str: &str) -> Result<NRTMMessage, ParseError> {
-        try_parse_nrtm(Rule::v2_operation, str)
+    fn stream_from(
+        &mut self,
+        reader: T,
+    ) -> impl TryStream<Ok = NRTMMessage, Error = NRTMStreamError> {
+        self.inner_decoder.get_stream(reader)
     }
 }
 

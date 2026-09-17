@@ -1,174 +1,174 @@
 use crate::{NRTMMessage, NRTMParser, NRTMV2Parser, NRTMV3Parser, ParseError};
-use tokio_util::bytes::BytesMut;
-use tokio_util::codec::Decoder;
-
-const MIN_BUFFER_LEN: usize = 8192;
-const MIN_DECODE_LEN: usize = "ADD 1".len();
+use chardetng::{EncodingDetector, Iso2022JpDetection, Utf8Detection};
+use futures_util::{TryStream, TryStreamExt};
+use re_delimiter_codec::{REDelimiterCodec, REDelimiterCodecError};
+use regex::bytes::Regex;
+use tokio::io::AsyncRead;
+use tokio_util::codec::FramedRead;
 
 #[derive(Clone)]
-pub struct NRTMDec {
+pub(crate) struct NRTMDec {
     parser: fn(&str) -> Result<NRTMMessage, ParseError>,
 }
 
+#[derive(Debug)]
+pub enum NRTMStreamError {
+    REDelimiterCodec(REDelimiterCodecError),
+    Parser(ParseError),
+}
+
+fn new_nrtm_preparser() -> REDelimiterCodec {
+    const MAX_CHUNK_LEN: usize = 131072; // 128k
+
+    // ok to call unwrap here, we know this will not fail
+    REDelimiterCodec::new_with_max_length(
+        Regex::new("(?R)\n[^%][^AD][^DE][^DL].*\n\n").unwrap(),
+        MAX_CHUNK_LEN,
+    )
+}
+
 impl NRTMDec {
-    pub fn new_v2() -> Self {
+    pub(crate) fn new_v2() -> Self {
         NRTMDec {
             parser: NRTMV2Parser::try_parse,
         }
     }
 
-    pub fn new_v3() -> Self {
+    pub(crate) fn new_v3() -> Self {
         NRTMDec {
             parser: NRTMV3Parser::try_parse,
         }
     }
-}
+    pub(crate) fn get_stream<T: AsyncRead>(
+        &mut self,
+        reader: T,
+    ) -> impl TryStream<Ok = NRTMMessage, Error = NRTMStreamError> {
+        let framed_reader = FramedRead::new(reader, new_nrtm_preparser());
+        let parser = self.parser;
 
-impl Decoder for NRTMDec {
-    type Item = NRTMMessage;
-    type Error = ParseError;
+        framed_reader
+            .and_then(
+                // charset guesstimation
+                |chunk| {
+                    // for each chunk we need a new instance of detector,
+                    // as each chunk potentially has a different charset
+                    let mut encoding_detector = EncodingDetector::new(Iso2022JpDetection::Allow);
+                    // re ISO 2022 JP, we don't care about preventing XSS, this is the job of either
+                    // the data source or the client. we're only a middle layer and so
+                    // should not meddle with the data.
 
-    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        src.reserve(MIN_BUFFER_LEN);
+                    // feed all the chunk data in the encoding detector
+                    encoding_detector.feed(chunk.as_ref(), true);
 
-        // from_utf8 is no-copy
-        let str = String::from_utf8(src.to_vec()).map_err(ParseError::NonUTF8Input)?;
+                    // there is no encoding spec for NRTMv2 and NRTMv3, so allowing UTF-8 as a
+                    // detection target is fine
+                    let encoding = encoding_detector.guess(None, Utf8Detection::Allow);
 
-        // bail early if buffer is empty, as a parser run on empty and / or undecidable str
-        // is a waste of cycles and may yield errors
-        if src.is_empty() || src.len() <= MIN_DECODE_LEN {
-            return Ok(None);
-        }
+                    // result is String, in most cases no copy will happen. copy will only happen
+                    // for replacement characters insertion
+                    let (decoded, _, _) = encoding.decode(chunk.as_ref());
 
-        match (self.parser)(str.as_str()) {
-            Ok(message) => {
-                let _message_bytes = src.split_to(message.span.end_b);
-                // implicit drop for message_str and message_bytes
-                Ok(Some(message))
-            }
-            // per tokio-util codec documentation,
-            // If the bytes look valid, but a frame isn’t fully available yet,
-            // then Ok(None) is returned.
-            Err(ParseError::Incomplete) => Ok(None),
-            Err(ParseError::LeadingGarbage(span)) => {
-                // split garbage, flush and return err
-                let _garbage_bytes = src.split_to(span.end_b);
-                Err(ParseError::LeadingGarbage(span))
-            }
-            // malformed input, split at malformed, flush and return err
-            // the rest will be eaten as leading garbage
-            Err(ParseError::Parser(err)) => {
-                let _malformed_bytes = match err.location {
-                    // boop it! kick it! drop it!
-                    pest::error::InputLocation::Pos(u) => src.split_to(u),
-                    pest::error::InputLocation::Span((_, end)) => src.split_to(end),
+                    futures_util::future::ready(Ok(decoded.into_owned()))
+                },
+            )
+            .map_err(NRTMStreamError::REDelimiterCodec) // use same error type for encapsulation
+            .and_then(move |cow_str| {
+                let r = match parser(cow_str.as_ref()) {
+                    Ok(message) => Ok(message),
+                    Err(e) => Err(NRTMStreamError::Parser(e)), // client should recover
                 };
-                Err(ParseError::Parser(err))
-            }
-            // malformed utf-8, flush incriminated section
-            Err(ParseError::NonUTF8Input(u8)) => {
-                let _utf8err_bytes = &mut src.split_to(u8.utf8_error().valid_up_to());
-                Err(ParseError::NonUTF8Input(u8))
-            }
-            // malformed serial
-            Err(ParseError::MalformedSerial(span, e)) => {
-                let _garbage_bytes = src.split_to(span.end_b); // ibid
-                Err(ParseError::MalformedSerial(span, e))
-            }
-            Err(ParseError::NoMatch) => Err(ParseError::NoMatch),
-            Err(ParseError::IoError(ioe)) => {
-                src.clear(); // clear buffer
-                Err(ParseError::IoError(ioe))
-            }
-        }
+                futures_util::future::ready(r)
+            })
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::streaming::NRTMDec;
-    use crate::tests::streaming_fixtures;
-    use crate::{OpType, ParseError, Verb};
+    use super::*;
+    use crate::{NRTMMessage, OpType, ParseError};
+    use futures_util::TryStreamExt;
     use std::assert_matches;
     use std::io::{Error as IOError, ErrorKind};
     use tokio::fs::File;
-    use tokio_stream::StreamExt;
     use tokio_test::io::Builder;
-    use tokio_util::codec::FramedRead;
 
     #[tokio::test]
-    async fn v3_message_stream_ok() {
-        let nrtmv3_sample = File::open("./src/tests/nrtmv3_ripe_sample.txt")
+    async fn v3_charset_guesstimation_ok() {
+        let nrtmv3_sample = File::open("./src/tests/nrtmv3_ripe_mixed_encoding_sample.txt")
             .await
             .unwrap();
-        let decoder = NRTMDec::new_v3();
-        let mut reader = FramedRead::new(nrtmv3_sample, decoder);
-        let mut linear_id_counter = 65776763;
+        let mut decoder = NRTMDec::new_v3();
+        let mut stream = decoder.get_stream(nrtmv3_sample);
+        let mut linear_increase_id_counter = 65934900;
 
-        while let Some(Ok(res)) = reader.next().await {
-            match res.update {
-                OpType::V3(Verb::ADD, ctr) => {
-                    linear_id_counter += 1;
-                    assert_eq!(ctr, linear_id_counter);
+        loop {
+            match stream.try_next().await {
+                Ok(Some(NRTMMessage {
+                    update: OpType::V3(_, ctr),
+                    rpsl: _,
+                    span: _,
+                })) => {
+                    assert!(linear_increase_id_counter < ctr); // check strictly increasing
+                    linear_increase_id_counter = ctr;
                 }
-                _ => panic!("incorrect update {:?}", res.update),
+                Ok(Some(NRTMMessage {
+                    update: OpType::V2(_),
+                    rpsl: _,
+                    span: _,
+                })) => {} // ignore
+                // comment at the beginning is marked as a chunk but is incomplete from the POV
+                // of the parser
+                Err(e) => println!("got error {:?}", e),
+                Ok(None) => break, // end of stream
             }
         }
-        assert_eq!(linear_id_counter, 65776785); // last object id
+
+        assert_eq!(linear_increase_id_counter, 65934960); // last object id
     }
 
     #[tokio::test]
     async fn v3_parser_error_signalled() {
-        let mut reader = streaming_fixtures::v3_reader_from(
-            b"\
+        let mut decoder = NRTMDec::new_v3();
+        let mut reader = decoder.get_stream(
+            &b"\
 ADD 324876
 
 object: property
 \\xxt*some-more: properties
 end-of: object
 
-",
+"[..],
         );
-        assert_matches!(reader.next().await, Some(Err(ParseError::Parser(_))));
-    }
-
-    #[tokio::test]
-    async fn v3_non_utf8_error_signalled() {
-        let mut reader = streaming_fixtures::v3_reader_from(
-            b"\
-ADD 324876
-
-object: property\xF8\xF8
-some-more: properties
-end-of: object
-
-",
+        assert_matches!(
+            reader.try_next().await,
+            Err(NRTMStreamError::Parser(ParseError::Parser(_)))
         );
-        assert_matches!(reader.next().await, Some(Err(ParseError::NonUTF8Input(_))));
     }
 
     #[tokio::test]
     async fn v3_malformed_serial_signalled() {
-        let mut reader = streaming_fixtures::v3_reader_from(
-            b"\
+        let mut decoder = NRTMDec::new_v3();
+        let mut reader = decoder.get_stream(
+            &b"\
 # should not fit into u64
 ADD 99999999999999999999
 
 start-field:    yes
 netname:        TRANSPORT-NET
 
-",
+"[..],
         );
         assert_matches!(
-            reader.next().await,
-            Some(Err(ParseError::MalformedSerial(_, _)))
+            reader.try_next().await,
+            Err(NRTMStreamError::Parser(ParseError::MalformedSerial(_, _)))
         );
     }
 
     #[tokio::test]
-    async fn v3_no_match_signalled() {
-        let mut reader = streaming_fixtures::v3_reader_from(
-            b"\
+    async fn v3_no_chunks_signalled() {
+        let mut decoder = NRTMDec::new_v3();
+        let mut reader = decoder.get_stream(
+            &b"\
 % The RIPE Database is subject to Terms and Conditions.
 % See https://docs.db.ripe.net/terms-conditions.html
 
@@ -177,10 +177,15 @@ netname:        TRANSPORT-NET
 % -kg RIPE:3:65776764-LAST
 %START Version: 3 RIPE 65776764-65776784
 # comment
-",
+"[..],
         );
 
-        assert_matches!(reader.next().await, Some(Err(ParseError::IoError(_))));
+        assert_matches!(
+            reader.try_next().await,
+            Err(NRTMStreamError::REDelimiterCodec(
+                REDelimiterCodecError::Io(_)
+            ))
+        );
     }
 
     #[tokio::test]
@@ -202,10 +207,15 @@ end-of: obj
             .read(nrtmv3_truncated_message)
             .read_error(IOError::new(ErrorKind::BrokenPipe, "connection closed"))
             .build();
-        let decoder = NRTMDec::new_v3();
-        let mut reader = FramedRead::new(ioerroring_sample, decoder);
+        let mut decoder = NRTMDec::new_v3();
+        let mut reader = decoder.get_stream(ioerroring_sample);
 
-        reader.next().await.unwrap().unwrap(); // chuck first object
-        assert_matches!(reader.next().await, Some(Err(ParseError::IoError(_))));
+        reader.try_next().await.unwrap().unwrap(); // chuck first object
+        assert_matches!(
+            reader.try_next().await,
+            Err(NRTMStreamError::REDelimiterCodec(
+                REDelimiterCodecError::Io(_)
+            ))
+        );
     }
 }
