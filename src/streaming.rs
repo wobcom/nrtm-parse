@@ -22,7 +22,27 @@ fn new_nrtm_preparser() -> REDelimiterCodec {
 
     // ok to call unwrap here, we know this will not fail
     REDelimiterCodec::new_with_max_length(
-        Regex::new("(?R)\n[^%][^AD][^DE][^DL].*\n\n").unwrap(),
+        // will slice at each end of an NRTM object.
+        // NRTM delimiters are double new lines.
+        //
+        // we add a negative match in front of the delimiter,
+        // which DOES NOT match the start of an ADD/DEL operation (v2/v3).
+        // This is akin to negative lookbehind but ofc not as precise...
+        // but it's good enough for us. I am not using alternate patterns
+        //
+        // This has the effect of excluding this exact double newline separator
+        // and thus, we have the full NRTM message, without odd/even pairs.
+        // It will also not match RPSL line continuations, since the two \n
+        // are not right next to each other (at least one character is between them)
+        //
+        // \nDEL 65934907\n\n                                      <- this does not match
+        //
+        // \nmulti-line: attribute\n multi-line: goes on\n         <- this does not match
+        //
+        // \nremarks:        ****************************\n\n      <- this *does* match. end of RPSL
+        //
+        // which is what we want, since we need to cut at the end of the RPSL object.
+        Regex::new(r"(?R)\n[^%][^AD][^DE][^DL].*\n\n").unwrap(),
         MAX_CHUNK_LEN,
     )
 }
