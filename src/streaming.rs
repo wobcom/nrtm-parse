@@ -25,8 +25,19 @@ fn new_nrtm_preparser() -> REDelimiterCodec {
         // will slice at each end of an NRTM object.
         // NRTM delimiters are double new lines.
         //
+        // 1st part of the regex: \n[^%].*
+        //
+        // we add a negative match in order to not match comment lines
+        // which are part of the prelude. sometimes NRTM preludes contain
+        // double newlines.
+        //
+        //
+        // 2nd part of the regex: \n[^AD][^DE][^DL].*\n\n
+        //
         // we add a negative match in front of the delimiter,
         // which DOES NOT match the start of an ADD/DEL operation (v2/v3).
+        // That operation will always be after the start of a newline (cannot
+        // have a line continuation, as opposed to RPSL).
         // This is akin to negative lookbehind but ofc not as precise...
         // but it's good enough for us. I am not using alternate patterns
         //
@@ -35,6 +46,12 @@ fn new_nrtm_preparser() -> REDelimiterCodec {
         // It will also not match RPSL line continuations, since the two \n
         // are not right next to each other (at least one character is between them)
         //
+        // remarks: RPSL objects have at least 1 class attr and 1 attr from the class,
+        // so having two entire lines on the "back" part of the regex is okay. these will
+        // match the RPSL object partially or entirely.
+        //
+        // EXAMPLES:
+        //
         // \nDEL 65934907\n\n                                      <- this does not match
         //
         // \nmulti-line: attribute\n multi-line: goes on\n         <- this does not match
@@ -42,7 +59,7 @@ fn new_nrtm_preparser() -> REDelimiterCodec {
         // \nremarks:        ****************************\n\n      <- this *does* match. end of RPSL
         //
         // which is what we want, since we need to cut at the end of the RPSL object.
-        Regex::new(r"(?R)\n[^%][^AD][^DE][^DL].*\n\n").unwrap(),
+        Regex::new(r"(?R)\n[^%].*\n[^AD][^DE][^DL].*\n\n").unwrap(),
         MAX_CHUNK_LEN,
     )
 }
