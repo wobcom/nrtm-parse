@@ -148,7 +148,6 @@ dependencies = [
  "re-delimiter-codec",
  "regex",
  "tokio",
- "tokio-stream",
  "tokio-test",
  "tokio-util",
 ]
