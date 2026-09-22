@@ -153,9 +153,7 @@ mod tests {
                     rpsl: _,
                     span: _,
                 })) => {} // ignore
-                // comment at the beginning is marked as a chunk but is incomplete from the POV
-                // of the parser
-                Err(e) => println!("got error {:?}", e),
+                Err(e) => panic!("got error {:?}", e),
                 Ok(None) => break, // end of stream
             }
         }

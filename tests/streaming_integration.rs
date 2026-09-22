@@ -19,18 +19,23 @@ async fn parse_message_stream_example() {
         let optional_result = stream.try_next().await;
 
         match optional_result {
-            Err(NRTMStreamError::Parser(ParseError::NoMatch))
-            | Err(NRTMStreamError::Parser(ParseError::Incomplete))
-            | Err(NRTMStreamError::Parser(ParseError::Parser(_)))
-            | Err(NRTMStreamError::Parser(ParseError::MalformedSerial(_, _)))
-            | Err(NRTMStreamError::Parser(ParseError::LeadingGarbage(_))) => {
-                // do nothing, all of these are retryable errors
-                // (we should have at least one incomplete parse error due to prelude / comment
-                // being chunked). ideally for each error type you'd want to log it, so that
+            e @ Err(NRTMStreamError::Parser(ParseError::NoMatch))
+            | e @ Err(NRTMStreamError::Parser(ParseError::Incomplete))
+            | e @ Err(NRTMStreamError::Parser(ParseError::Parser(_)))
+            | e @ Err(NRTMStreamError::Parser(ParseError::MalformedSerial(_, _)))
+            | e @ Err(NRTMStreamError::Parser(ParseError::LeadingGarbage(_))) => {
+                // all of these are retryable errors.
+                // ideally for each error type you'd want to log it, so that
                 // we know some garbage data was in the stream.
+                panic!(
+                    "recoverable error during consumption of NRTM stream\
+                      should not happen with test data. error encountered: {:?}",
+                    e
+                );
             }
             Err(error) => panic!(
-                "irrecoverable error during consumption of NRTM stream {:?}",
+                "irrecoverable error during consumption of NRTM stream\
+                 should not happen with test data. error encountered: {:?}",
                 error
             ),
             Ok(None) => break, // end of stream
