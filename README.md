@@ -14,7 +14,8 @@ Minimum supported rust version is 1.97.1
 ## Dependencies
 This crate is built on:
 - the [Pest parser](https://crates.io/crates/pest) crate
-- [tokio](https://crates.io/crates/tokio), [tokio-util](https://crates.io/crates/tokio-util) and [tokio-stream](https://crates.io/crates/tokio-stream) for the async features
+- mixed encoding detection and conversion is achieved through [chardetng](https://crates.io/crates/chardetng) and [encoding_rs](https://crates.io/crates/encoding_rs)
+- [tokio](https://crates.io/crates/tokio), [tokio-util](https://crates.io/crates/tokio-util) and [futures-util](https://crates.io/crates/futures-util) for the async features
 
 ## Examples / How to hold it correctly 🔨
 You can find some code examples in the integration tests:
