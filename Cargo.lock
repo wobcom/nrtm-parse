@@ -220,9 +220,9 @@ dependencies = [
 
 [[package]]
 name = "re-delimiter-codec"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd265cf799a0cdc9eb1417b1403990fd29aafe6992877c70f2b75d1439125e77"
+checksum = "a9349d583e5c1d00627915dcb1ee3408a56e73f64abcc21529628ef97157be36"
 dependencies = [
  "regex",
  "tokio-util",
