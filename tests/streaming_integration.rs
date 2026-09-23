@@ -9,10 +9,11 @@ use {
 #[cfg(feature = "async-streaming")]
 #[tokio::test]
 async fn parse_message_stream_example() {
+    const MAX_NRTM_CHUNK_LEN: usize = 1048576; // 1M is reasonable
     let nrtmv3_sample = File::open("./src/tests/nrtmv3_ripe_mixed_encoding_sample.txt")
         .await
         .unwrap();
-    let mut parser = NRTMV3Parser::new();
+    let mut parser = NRTMV3Parser::new(MAX_NRTM_CHUNK_LEN);
     let mut stream = parser.stream_from(nrtmv3_sample);
 
     loop {

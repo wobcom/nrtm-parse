@@ -87,23 +87,17 @@ where
     ) -> impl TryStream<Ok = NRTMMessage, Error = NRTMStreamError>;
 }
 
+#[cfg_attr(not(feature = "async-streaming"), derive(Default))]
 pub struct NRTMV3Parser {
     #[cfg(feature = "async-streaming")]
     inner_decoder: NRTMDec,
 }
 
-#[cfg(feature = "async-streaming")]
-impl Default for NRTMV3Parser {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl NRTMV3Parser {
     #[cfg(feature = "async-streaming")]
-    pub fn new() -> Self {
+    pub fn new(max_chunk_len: usize) -> Self {
         Self {
-            inner_decoder: NRTMDec::new_v3(),
+            inner_decoder: NRTMDec::new_v3(max_chunk_len),
         }
     }
     #[cfg(not(feature = "async-streaming"))]
@@ -117,23 +111,17 @@ impl NRTMParser for NRTMV3Parser {
     }
 }
 
+#[cfg_attr(not(feature = "async-streaming"), derive(Default))]
 pub struct NRTMV2Parser {
     #[cfg(feature = "async-streaming")]
     inner_decoder: NRTMDec,
 }
 
-#[cfg(feature = "async-streaming")]
-impl Default for NRTMV2Parser {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl NRTMV2Parser {
     #[cfg(feature = "async-streaming")]
-    pub fn new() -> Self {
+    pub fn new(max_chunk_len: usize) -> Self {
         Self {
-            inner_decoder: NRTMDec::new_v2(),
+            inner_decoder: NRTMDec::new_v2(max_chunk_len),
         }
     }
     #[cfg(not(feature = "async-streaming"))]

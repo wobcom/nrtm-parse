@@ -9,6 +9,7 @@ use tokio_util::codec::FramedRead;
 #[derive(Clone)]
 pub(crate) struct NRTMDec {
     parser: fn(&str) -> Result<NRTMMessage, ParseError>,
+    max_chunk_len: usize,
 }
 
 #[derive(Debug)]
@@ -17,9 +18,7 @@ pub enum NRTMStreamError {
     Parser(ParseError),
 }
 
-fn new_nrtm_preparser() -> REDelimiterCodec {
-    const MAX_CHUNK_LEN: usize = 131072; // 128k
-
+fn new_nrtm_preparser(with_max_chunk_len: usize) -> REDelimiterCodec {
     // ok to call unwrap here, we know this will not fail
     REDelimiterCodec::new_with_max_length(
         // will slice at each end of an NRTM object.
@@ -60,27 +59,29 @@ fn new_nrtm_preparser() -> REDelimiterCodec {
         //
         // which is what we want, since we need to cut at the end of the RPSL object.
         Regex::new(r"(?R)\n[^%].*\n[^AD][^DE][^DL].*\n\n").unwrap(),
-        MAX_CHUNK_LEN,
+        with_max_chunk_len,
     )
 }
 
 impl NRTMDec {
-    pub(crate) fn new_v2() -> Self {
+    pub(crate) fn new_v2(max_chunk_len: usize) -> Self {
         NRTMDec {
             parser: NRTMV2Parser::try_parse,
+            max_chunk_len,
         }
     }
 
-    pub(crate) fn new_v3() -> Self {
+    pub(crate) fn new_v3(max_chunk_len: usize) -> Self {
         NRTMDec {
             parser: NRTMV3Parser::try_parse,
+            max_chunk_len,
         }
     }
     pub(crate) fn get_stream<T: AsyncRead>(
         &mut self,
         reader: T,
     ) -> impl TryStream<Ok = NRTMMessage, Error = NRTMStreamError> {
-        let framed_reader = FramedRead::new(reader, new_nrtm_preparser());
+        let framed_reader = FramedRead::new(reader, new_nrtm_preparser(self.max_chunk_len));
         let parser = self.parser;
 
         framed_reader
@@ -129,12 +130,14 @@ mod tests {
     use tokio::fs::File;
     use tokio_test::io::Builder;
 
+    const TEST_MAX_CHUNK_LEN: usize = 131072; // 128K
+
     #[tokio::test]
     async fn v3_charset_guesstimation_ok() {
         let nrtmv3_sample = File::open("./src/tests/nrtmv3_ripe_mixed_encoding_sample.txt")
             .await
             .unwrap();
-        let mut decoder = NRTMDec::new_v3();
+        let mut decoder = NRTMDec::new_v3(TEST_MAX_CHUNK_LEN);
         let mut stream = decoder.get_stream(nrtmv3_sample);
         let mut linear_increase_id_counter = 65934900;
 
@@ -163,7 +166,7 @@ mod tests {
 
     #[tokio::test]
     async fn v3_parser_error_signalled() {
-        let mut decoder = NRTMDec::new_v3();
+        let mut decoder = NRTMDec::new_v3(TEST_MAX_CHUNK_LEN);
         let mut reader = decoder.get_stream(
             &b"\
 ADD 324876
@@ -182,7 +185,7 @@ end-of: object
 
     #[tokio::test]
     async fn v3_malformed_serial_signalled() {
-        let mut decoder = NRTMDec::new_v3();
+        let mut decoder = NRTMDec::new_v3(TEST_MAX_CHUNK_LEN);
         let mut reader = decoder.get_stream(
             &b"\
 # should not fit into u64
@@ -201,7 +204,7 @@ netname:        TRANSPORT-NET
 
     #[tokio::test]
     async fn v3_no_chunks_signalled() {
-        let mut decoder = NRTMDec::new_v3();
+        let mut decoder = NRTMDec::new_v3(TEST_MAX_CHUNK_LEN);
         let mut reader = decoder.get_stream(
             &b"\
 % The RIPE Database is subject to Terms and Conditions.
@@ -242,7 +245,7 @@ end-of: obj
             .read(nrtmv3_truncated_message)
             .read_error(IOError::new(ErrorKind::BrokenPipe, "connection closed"))
             .build();
-        let mut decoder = NRTMDec::new_v3();
+        let mut decoder = NRTMDec::new_v3(TEST_MAX_CHUNK_LEN);
         let mut reader = decoder.get_stream(ioerroring_sample);
 
         reader.try_next().await.unwrap().unwrap(); // chuck first object
