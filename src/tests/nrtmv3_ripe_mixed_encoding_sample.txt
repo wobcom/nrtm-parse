@@ -1,0 +1,915 @@
+% The RIPE Database is subject to Terms and Conditions.
+% See https://docs.db.ripe.net/terms-conditions.html
+
+%START Version: 3 RIPE 65934907-65941039
+
+DEL 65934907
+
+inet6num:       2a01:4f8:173:171a::/64
+netname:        HOS-2063226
+descr:          HOS-2063226
+country:        DE
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+status:         ASSIGNED
+notify:         ripe-mntner@hetzner.com
+mnt-by:         HOS-GUN
+created:        2024-10-07T11:03:23Z
+last-modified:  2024-10-07T11:03:23Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934909
+
+inetnum:        89.19.12.0 - 89.19.12.15
+netname:        Elif-Yelkenci-Net
+descr:          Elif Yelkenci
+country:        TR
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+remarks:        Please abuse mail to info@ylknc.com
+status:         ASSIGNED PA
+mnt-by:         CIZGI-MNT
+created:        2026-09-14T21:00:09Z
+last-modified:  2026-09-14T21:00:09Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934910
+
+inetnum:        89.19.12.0 - 89.19.12.15
+netname:        Elif-Yelkenci-Net
+descr:          Elif Yelkenci
+country:        TR
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+remarks:        Please abuse mail to info@ylknc.com
+status:         ASSIGNED PA
+mnt-by:         CIZGI-MNT
+created:        2026-09-14T22:00:16Z
+last-modified:  2026-09-14T22:00:16Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934932
+
+role:           Abuse-C Role
+address:        Dummy address for AR80181-RIPE
+e-mail:         unread@ripe.net
+abuse-mailbox:  NOC@HYTRON.IO
+nic-hdl:        AR80181-RIPE
+mnt-by:         Hytronnetwork-MNT
+created:        2026-06-11T09:00:31Z
+last-modified:  2026-06-11T09:00:31Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934937
+
+as-set:         AS-VM-JE-CUS
+remarks:        ROUTE64.ORG / FREETRANSIT.DE CUSTOMERS
+remarks:        !!! PLEASE NOTE, THIS AS-SET IS AUTOMATICALLY GENERATED VIA REGISTRATION THROUGH ROUTE64.ORG!!!
+remarks:        !!! ALL NETWORKS (ASNS) HAVE ISSUED ROUTE64.ORG AS UPSTREAM PROVIDER FOR THEIR NETWORKS !!!
+remarks:        !!! ALL NETWORKS (ASNS) HAVE AN ACTIVE BGP SESSION WITH ROUTE64.ORG WITHIN THE LAST 7 DAYS !!!
+tech-c:         DUMY-RIPE
+admin-c:        DUMY-RIPE
+mnt-by:         vm_je
+mnt-by:         vm-je
+mnt-by:         route64-MNT
+created:        2021-03-01T10:04:05Z
+last-modified:  2026-09-14T22:04:21Z
+source:         RIPE
+members:        AS18710
+members:        AS214844:AS-CSTUDNETZ
+members:        AS209828:AS-GENCBT
+members:        AS214260:AS-ITCOMMS
+members:        AS219261
+members:        AS218917
+members:        AS205591:AS-MAIN
+members:        AS198741
+members:        AS204181:AS-DOWNSTREAM
+members:        AS212112
+members:        AS205563
+members:        AS138998
+members:        AS199868:AS-ALL
+members:        AS-LHSNETWORKS
+members:        AS198016:AS-UPSTREAM
+members:        AS197438:AS-JBPRIV
+members:        AS215006
+members:        AS215212:AS-NETNEXT
+members:        AS198767
+members:        AS213472:AS-KOEHR
+members:        AS214556:AS-VEXURA
+members:        AS-NYALLO
+members:        AS212834:AS-DUREL
+members:        AS-CRIMPAC
+members:        AS208223
+members:        AS208733:AS-FFVEC
+members:        AS199211
+members:        AS218883
+members:        AS207590
+members:        AS197758:AS-NXLAYER
+members:        AS-TOZTECH
+members:        AS205413
+members:        AS205305:AS-PANDEM
+members:        AS215486:AS-ALL
+members:        AS-TRUEWINTER
+members:        AS213416:AS-TISCH
+members:        AS211688:AS-WOLFFY
+members:        AS200455:AS-ALL
+members:        AS204880
+members:        AS199950:AS-HJELMENTERPRISES
+members:        AS206058
+members:        AS209185
+members:        AS205548
+members:        AS201379
+members:        AS208487
+members:        AS400941
+members:        AS150790
+members:        AS211626:AS-ASRO
+members:        AS215375
+members:        AS201541
+members:        AS203233
+members:        AS210796:AS-BS
+members:        AS202322
+members:        AS401748
+members:        AS205893
+members:        AS216191
+members:        AS208589
+members:        AS218822:AS-PMHONLY
+members:        AS201238
+members:        AS214269
+members:        AS208709
+members:        AS-RAPIDZONE
+members:        AS401113
+members:        AS-OXAR
+members:        AS216052:AS-ALL
+members:        AS214450
+members:        AS-IMP-NET
+members:        AS216438:AS-HLNETWORKING
+members:        AS215931:AS-BARNA
+members:        AS210578:AS-MCPAL
+members:        AS215004:AS-BRNET
+members:        AS219421:AS-ALL
+members:        AS207873
+members:        AS199183:AS-ESSINK
+members:        AS328949
+members:        AS-IPV6-EDU-PL
+members:        AS208584
+members:        AS213471
+members:        AS198599
+members:        AS-DAVOSYS
+members:        AS-XYZ
+members:        AS219051
+members:        AS57027:AS-BASE
+members:        AS215459:AS-DOWNSTREAM
+members:        AS213430:AS-TRANSIT
+members:        AS219271:AS-MAIN
+members:        AS212691:AS-SET-ARONSTRECKER
+members:        AS201392:AS-TEAMINVERSELLC
+members:        AS210825:AS-TEIGTASCHERLFABRIK
+members:        AS209182
+members:        AS206000:AS-SET
+members:        AS219453
+members:        AS9423
+members:        AS210732:AS-ECOWAN
+members:        AS198826
+members:        AS203062
+members:        AS209527:AS-DYNAMIX
+members:        AS208694:AS-TIEKOETTER
+members:        AS200116
+members:        AS198120
+members:        AS198408
+members:        AS61953:AS-TRANSIT
+members:        AS214642:AS-SET
+members:        AS203453
+members:        AS199674
+members:        AS202886
+members:        AS213297:AS-SET-WELTMEYER1
+members:        AS200368:AS-ABNORMALFREQ
+members:        AS-LIGHTENING
+members:        AS214420:AS-CLNEXUS
+members:        AS-ISHRAK
+members:        AS219412
+members:        AS213279
+members:        AS198879
+members:        AS205539
+members:        AS218842
+members:        AS207650
+members:        AS199763:AS-PCELA
+members:        AS214223:AS-FPNET
+members:        AS402975:AS-DALINIET
+members:        AS214749:AS-PAW-INTERNAL
+members:        AS-SARUNETWORK
+members:        AS209745:AS-ONET
+members:        AS202751
+members:        AS58626
+members:        AS214549
+members:        AS401593:AS-PEERS
+members:        AS207596:AS-WECLOUD
+members:        AS210957:AS-SITS
+members:        AS208301:AS-ANY
+members:        AS40929
+members:        AS214508
+members:        AS151669
+members:        AS218890
+members:        AS205621:AS-SELF
+members:        AS210106:AS-HUSKYHQ
+members:        AS203539
+members:        AS197338
+members:        AS218705
+members:        AS51351
+members:        AS205991
+members:        AS201345
+members:        AS219178:AS-BOGERTDEV
+members:        AS204463
+members:        AS210074:AS-DOWNSTREAM
+members:        AS215561
+members:        AS200879:AS-JCOLIDELES
+members:        AS203686:AS-ILH
+members:        AS205165
+members:        AS208059
+members:        AS402145
+members:        AS202909
+members:        AS136842
+members:        AS207466
+members:        AS216456
+members:        AS210881
+members:        AS219299
+members:        AS211370
+members:        AS401135
+members:        AS197371
+members:        AS213467:AS-PROADMIN
+members:        AS-CEDARCREEK
+members:        AS-KING
+members:        AS197601:AS-FDX-NET
+members:        AS-XIWEI
+members:        AS214344
+members:        AS218804
+members:        AS154408
+members:        AS215664
+members:        AS203868
+members:        AS205336:AS-DEEPSPACECOW
+members:        AS214076:AS-ECKER
+members:        AS201705:AS-XLINET
+members:        AS214408
+members:        AS402704
+members:        AS219158
+members:        AS397656
+members:        AS209710:AS-SELF
+members:        AS219251
+members:        AS-SADDLE
+members:        AS208679:AS-YIKAI-NET
+members:        AS213292:AS-OKKEL
+members:        AS-POLARIS
+members:        AS219013
+members:        AS199854
+members:        AS197736
+members:        AS215228
+members:        AS206115
+members:        AS401703
+members:        AS214561:AS-ALL
+members:        AS214953:AS-MRICKL
+members:        AS212234
+members:        AS219406
+members:        AS203019
+members:        AS200625:AS-CONE
+members:        AS402902:AS-402902
+members:        AS213286:AS-TRANSIT
+members:        AS216402:AS-LEWANPETIT
+members:        AS401023:AS-US
+members:        AS219488
+members:        AS209632
+members:        AS211585:AS-ALL
+members:        AS205163
+members:        AS-ZHIWENSUN
+members:        AS203704:AS-SPANAGIOT
+members:        AS219503:AS-MAIN
+members:        AS219015
+members:        AS34979
+members:        AS214451:AS-PEERS
+members:        AS203374
+members:        AS44822:AS-GXT
+members:        AS215146:AS-ROBERTOSANTO
+members:        AS17160:AS-NCOM
+members:        AS212993
+members:        AS57330:AS-GIRAFFETECH
+members:        AS215786:AS-YOUCHEN
+members:        AS395878
+members:        AS-LINETEX
+members:        AS215953:AS-ASHIMOV
+members:        AS215527:AS-XERONET
+members:        AS207149:AS-SNAWNET
+members:        AS219123:AS-MORNINETWORK
+members:        AS204994:AS-MAIN
+members:        AS402339:AS-ROUTE64
+members:        AS-MSYS-IX
+members:        AS147020
+members:        AS206098
+members:        AS213434
+members:        AS204150
+members:        AS197137
+members:        AS197291
+members:        AS215502
+members:        AS197305
+members:        AS-FATIH-UNLU
+members:        AS-BRECHT
+members:        AS201033
+members:        AS213959:AS-ALTSTACK
+members:        AS219249:AS-ALL
+members:        AS-MSRTG
+members:        AS199019
+members:        AS212306:AS-SET
+members:        AS208563:AS-LINUXGEMINI
+members:        AS214630
+members:        AS212170:AS-RULA
+members:        AS206290
+members:        AS-AMIRGT
+members:        AS201423:AS-LUNALIGHT
+members:        AS209460:AS-ANNOUNCE
+members:        AS218830
+members:        AS218816
+members:        AS-AANETWORKS
+members:        AS200827
+members:        AS-Y525
+members:        AS212470:AS-LAPTOPCAT
+members:        AS402440
+members:        AS-AKKGROUP
+members:        AS219458
+members:        AS214342:AS-DIMINUENDO
+members:        AS209951
+members:        AS203874:AS-DEVREX
+members:        AS197469
+members:        AS203766
+members:        AS213036
+members:        AS202902
+members:        AS219500
+members:        AS208665
+members:        AS214769
+members:        AS211333
+members:        AS215619
+members:        AS219079
+members:        AS207411
+members:        AS216056
+members:        AS210622:AS-KICKED
+members:        AS218718:AS-CONE
+members:        AS133504
+members:        AS214382:AS-HOSTLAYICI
+members:        AS44001
+members:        AS202118
+members:        AS208471:AS-ALL
+members:        AS219442
+members:        AS202458
+members:        AS-FLORIANBAUER
+members:        AS206604
+members:        AS207824:AS-DOWNSTREAM
+members:        AS201421:AS-CORE
+members:        AS-SET-IT7
+members:        AS207529
+members:        AS215899:AS-GUDIS
+members:        AS23026
+members:        AS-PIEQ
+members:        AS199518:AS-199518
+members:        AS214478:AS-SAKURACLOUDS
+members:        AS214533
+members:        AS201132
+members:        AS402182
+members:        AS208904
+members:        AS201439
+members:        AS47341
+members:        AS57908
+members:        AS149771
+members:        AS205280:AS-ALL
+members:        AS207272:AS-VOJTECH-LINHART
+members:        AS213422:AS-SOLO
+members:        AS-ZZNYJIDI
+members:        AS214380:AS-TIM427
+members:        AS216190:AS-OCASDEV
+members:        AS213700
+members:        AS275732
+members:        AS213865
+members:        AS207530:AS-TSERV-NET
+members:        AS201398
+members:        AS402737
+members:        AS203314
+members:        AS215386:AS-AHOFMAN
+members:        AS204085:AS-ALL
+members:        AS200386:AS-T3HK0D3
+members:        AS37707
+members:        AS215844
+members:        AS204856
+members:        AS-FLORIAN
+members:        AS210360:AS-TRANSIT
+members:        AS207940:AS-KUPSCHKE
+members:        AS219239
+members:        AS402790
+members:        AS197324
+members:        AS60077
+members:        AS214161
+members:        AS216005
+members:        AS59449:AS-KONZOLA
+members:        AS218789:AS-ALL
+members:        AS218881
+members:        AS201254
+members:        AS402766
+members:        AS-SYNAPSIS
+members:        AS207567:AS-ZETZOV
+members:        AS214387:AS-AKOL
+members:        AS215916:AS-JTM
+members:        AS207972
+members:        AS200529:AS-INFOPRO
+members:        AS199395
+members:        AS218778
+members:        AS218901
+members:        AS214731:AS-ETO
+members:        AS210199:AS-TRANSIT
+members:        AS152848
+members:        AS200306
+members:        AS210617:AS-PKERN
+members:        AS213447:AS-ASTER-PEERS
+members:        AS203738:AS-MEMBERS
+members:        AS-GREGORYF
+members:        AS52112
+members:        AS198057
+members:        AS212513
+members:        AS219383
+members:        AS-GLMN
+members:        AS198186:AS-SETESDALNET
+members:        AS-HLITSERVICES
+members:        AS401385
+members:        AS219319
+members:        AS203923
+members:        AS199776
+members:        AS211902
+members:        AS204882:AS-DNOLAN
+members:        AS212888
+members:        AS42301
+members:        AS215296
+members:        AS199109:AS-GUYNEWBURY
+members:        AS219094
+members:        AS54281
+members:        AS401575
+members:        AS-CHIMON
+members:        AS402568:AS-AVERSON-IT
+members:        AS215499
+members:        AS202473
+members:        AS204033
+members:        AS219367
+members:        AS216342
+members:        AS207549
+members:        AS213586
+members:        AS215760
+members:        AS219133:AS-ALL
+members:        AS200992:AS-DWIM
+members:        AS213891:AS-LIUZHEN
+members:        AS199243:AS-GEEK-NZ
+members:        AS205369
+members:        AS401404
+members:        AS202222
+members:        AS212510:AS-ADMINAFK
+members:        AS219505
+members:        AS214938
+members:        AS201445
+members:        AS197658
+members:        AS-VAMH
+members:        AS198657
+members:        AS54380
+members:        AS150141
+members:        AS-WLG
+members:        AS211575:AS-RUINETWORK
+members:        AS214745
+members:        AS212529:AS-ALL
+members:        AS210320:AS-FEXXIO
+members:        AS215887
+members:        AS149998
+members:        AS201694
+members:        AS207884:AS-DASHPERF
+members:        AS54891
+members:        AS12345
+members:        AS44375
+members:        AS201957:AS-ETHERNALCLOUD
+members:        AS215017
+members:        AS-CHRISMUNDS
+members:        AS199241:AS-BF
+members:        AS207977
+members:        AS219166
+members:        AS25389
+members:        AS214762
+members:        AS211715
+members:        AS214971
+members:        AS211708
+members:        AS202197
+members:        AS60391
+members:        AS212895
+members:        AS210132
+members:        AS-SNARK
+members:        AS219235:AS-DOWNSTREAM
+members:        AS212332:AS-THINCO
+members:        AS61333
+members:        AS211411
+members:        AS206208
+members:        AS213449:AS-JOW
+members:        AS197127
+members:        AS200728
+members:        AS212386
+members:        AS209057
+members:        AS205079:AS-MANS
+members:        AS203226
+members:        AS208824
+members:        AS215769
+members:        AS402069
+members:        AS199195
+members:        AS197676
+members:        AS401315:AS-ILC-CONE
+members:        AS215509:AS-NRB
+members:        AS210715:AS-PISKOT
+members:        AS211939:AS-INZUGE
+members:        AS206569
+members:        AS200063
+members:        AS200464:AS-PAULO-R64
+members:        AS215685:AS-DOTNET
+members:        AS219539
+members:        AS200332
+members:        AS214645:AS-TEST
+members:        AS34445
+members:        AS200677
+members:        AS208790:AS-DOWNSTREAMS
+members:        AS205874:AS-ZEROBYTE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934938
+
+route:          155.117.178.0/24
+origin:         AS402288
+mnt-by:         netutils-mnt
+created:        2026-09-14T22:04:22Z
+last-modified:  2026-09-14T22:04:22Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934939
+
+inetnum:        155.117.178.0 - 155.117.178.255
+netname:        NET-155-117-178-0-24
+country:        SG
+geofeed:        https://geofeed.ipxo.com/geofeed.txt
+org:            ORG-TTPL2-RIPE
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+abuse-c:        TTPL7-RIPE
+status:         LEGACY
+remarks:        End User Organization
+mnt-by:         netutils-mnt
+created:        2026-09-14T22:04:22Z
+last-modified:  2026-09-14T22:04:22Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934940
+
+organisation:   ORG-MR209-RIPE
+org-name:       Makeev Rustam
+org-type:       OTHER
+address:        Dummy address for ORG-MR209-RIPE
+e-mail:         unread@ripe.net
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2020-02-08T21:02:13Z
+last-modified:  2026-09-14T22:04:27Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934941
+
+organisation:   ORG-MR209-RIPE
+org-name:       Makeev Rustam
+org-type:       OTHER
+address:        Dummy address for ORG-MR209-RIPE
+e-mail:         unread@ripe.net
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2020-02-08T21:02:13Z
+last-modified:  2026-09-14T22:04:27Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934942
+
+route:          155.117.178.0/24
+origin:         AS214483
+mnt-by:         netutils-mnt
+created:        2026-09-14T22:04:28Z
+last-modified:  2026-09-14T22:04:28Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934944
+
+mntner:         mnt-sk-securcom1-1
+admin-c:        DUMY-RIPE
+upd-to:         unread@ripe.net
+auth:           SSO noreply@ripe.net   # Real value hidden for security
+mnt-by:         mnt-sk-securcom1-1
+created:        2019-03-07T09:05:33Z
+last-modified:  2026-09-14T22:04:30Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934945
+
+organisation:   ORG-SS946-RIPE
+org-name:       securCom s.r.o.
+country:        SK
+org-type:       OTHER
+address:        Dummy address for ORG-SS946-RIPE
+e-mail:         unread@ripe.net
+mnt-ref:        mnt-sk-securcom1-1
+mnt-by:         mnt-sk-securcom1-1
+created:        2019-03-07T09:05:34Z
+last-modified:  2026-09-14T22:04:30Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934948
+
+role:           securCom a.s.,Abuse-C Role
+address:        Dummy address for AR51296-RIPE
+org:            ORG-SS946-RIPE
+e-mail:         unread@ripe.net
+nic-hdl:        AR51296-RIPE
+abuse-mailbox:  abuse@securcom.me
+mnt-by:         mnt-sk-securcom1-1
+created:        2019-03-07T09:05:33Z
+last-modified:  2019-03-07T12:34:11Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934949
+
+organisation:   ORG-SS946-RIPE
+org-name:       securCom s.r.o.
+country:        SK
+org-type:       OTHER
+address:        Dummy address for ORG-SS946-RIPE
+e-mail:         unread@ripe.net
+mnt-ref:        mnt-sk-securcom1-1
+mnt-by:         mnt-sk-securcom1-1
+created:        2019-03-07T09:05:34Z
+last-modified:  2026-09-14T22:04:30Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934950
+
+mntner:         mnt-sk-securcom1-1
+admin-c:        DUMY-RIPE
+upd-to:         unread@ripe.net
+auth:           SSO noreply@ripe.net   # Real value hidden for security
+mnt-by:         mnt-sk-securcom1-1
+created:        2019-03-07T09:05:33Z
+last-modified:  2026-09-14T22:04:30Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+ADD 65934953
+
+aut-num:        AS218772
+as-name:        Barbonetworks
+org:            ORG-BB373-RIPE
+sponsoring-org: ORG-NC22-RIPE
+remarks:        ---------------------------------------
+remarks:        Upstreams
+remarks:        ---------------------------------------
+remarks:        Netwerkvereniging Coloclue
+mp-import:      afi ipv4.unicast from AS8283 accept ANY
+mp-export:      afi ipv4.unicast to AS8283 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS8283 accept ANY
+mp-export:      afi ipv6.unicast to AS8283 announce AS218772:AS-BARBONETWORKS
+remarks:        Hurricane Electric
+mp-import:      afi ipv4.unicast from AS6939 accept ANY
+mp-export:      afi ipv4.unicast to AS6939 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS6939 accept ANY
+mp-export:      afi ipv6.unicast to AS6939 announce AS218772:AS-BARBONETWORKS
+remarks:        ROUTE64
+mp-import:      afi ipv4.unicast from AS212895 accept ANY
+mp-export:      afi ipv4.unicast to AS212895 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS212895 accept ANY
+mp-export:      afi ipv6.unicast to AS212895 announce AS218772:AS-BARBONETWORKS
+remarks:        ---------------------------------------
+remarks:        IXP's
+remarks:        ---------------------------------------
+remarks:        BGP.EXCHANGE
+mp-import:      afi ipv6.unicast from AS24381 accept AS-BGPEXCHANGE
+mp-export:      afi ipv6.unicast to AS24381 announce AS218772:AS-BARBONETWORKS
+remarks:        4b42 Internet Exchange
+mp-import:      afi ipv6.unicast from AS35708 accept AS-4IXP
+mp-export:      afi ipv6.unicast to AS35708 announce AS218772:AS-BARBONETWORKS
+remarks:        Frys-IX
+mp-import:      afi ipv6.unicast from AS56393 accept AS-FRYS-IX-CONNECTED
+mp-export:      afi ipv6.unicast to AS56393 announce AS218772:AS-BARBONETWORKS
+remarks:        ---------------------------------------
+remarks:        Peers
+remarks:        ---------------------------------------
+remarks:        LUJE.net
+mp-import:      afi ipv4.unicast from AS212855 accept AS212855:AS-LUJE
+mp-export:      afi ipv4.unicast to AS212855 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS212855 accept AS212855:AS-LUJE
+mp-export:      afi ipv6.unicast to AS212855 announce AS218772:AS-BARBONETWORKS
+remarks:        Hurricane Electric
+mp-import:      afi ipv4.unicast from AS6939 accept AS-HURRICANE
+mp-export:      afi ipv4.unicast to AS6939 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS6939 accept AS-HURRICANEv6
+mp-export:      afi ipv6.unicast to AS6939 announce AS218772:AS-BARBONETWORKS
+remarks:        bgp-rodeo
+mp-import:      afi ipv4.unicast from AS202585 accept AS202585:AS-RODEO
+mp-export:      afi ipv4.unicast to AS202585 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS202585 accept AS202585:AS-RODEO
+mp-export:      afi ipv6.unicast to AS202585 announce AS218772:AS-BARBONETWORKS
+remarks:        Expeditioner Network
+mp-import:      afi ipv4.unicast from AS218836 accept AS218836:AS-EXPED
+mp-export:      afi ipv4.unicast to AS2218836 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS218836 accept AS218836:AS-EXPED
+mp-export:      afi ipv6.unicast to AS218836 announce AS218772:AS-BARBONETWORKS
+remarks:        Innovation Harbor B.V.
+mp-import:      afi ipv4.unicast from AS211588 accept AS211588:AS-XYPHEN
+mp-export:      afi ipv4.unicast to AS211588 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS211588 accept AS211588:AS-XYPHEN
+mp-export:      afi ipv6.unicast to AS211588 announce AS218772:AS-BARBONETWORKS
+remarks:        ROUTE64
+mp-import:      afi ipv4.unicast from AS212895 accept AS212895:AS-ROUTE64
+mp-export:      afi ipv4.unicast to AS212895 announce AS218772:AS-BARBONETWORKS
+mp-import:      afi ipv6.unicast from AS212895 accept AS212895:AS-ROUTE64
+mp-export:      afi ipv6.unicast to AS212895 announce AS218772:AS-BARBONETWORKS
+remarks:
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+status:         ASSIGNED
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         Barbo-MNT
+created:        2026-09-03T07:24:46Z
+last-modified:  2026-09-14T22:04:39Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934958
+
+inetnum:        77.42.53.157 - 77.42.53.157
+netname:        HOS-2192795
+descr:          HOS-2192795
+country:        DE
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+status:         ASSIGNED PA
+notify:         ripe-mntner@hetzner.com
+mnt-by:         HOS-GUN
+created:        2026-09-14T01:45:22Z
+last-modified:  2026-09-14T01:45:22Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934959
+
+inet6num:       2a01:4f8:242:4106::/64
+netname:        FASTVPS-EESTI-OUE
+descr:          FastVPS Eesti OÜ
+country:        DE
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+status:         ASSIGNED
+notify:         ripe-mntner@hetzner.com
+mnt-by:         HOS-GUN
+created:        2023-04-12T01:07:02Z
+last-modified:  2023-04-12T01:07:02Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
+DEL 65934960
+
+inet6num:       2a01:4f8:221:1fa2::/64
+netname:        DIANA-HINOJOSA
+descr:          HOS-445612
+country:        DE
+admin-c:        DUMY-RIPE
+tech-c:         DUMY-RIPE
+status:         ASSIGNED
+notify:         ripe-mntner@hetzner.com
+mnt-by:         HOS-GUN
+created:        2026-07-12T01:15:06Z
+last-modified:  2026-07-13T01:15:06Z
+source:         RIPE
+remarks:        ****************************
+remarks:        * THIS OBJECT IS MODIFIED
+remarks:        * Please note that all data that is generally regarded as personal
+remarks:        * data has been removed from this object.
+remarks:        * To view the original object, please query the RIPE Database at:
+remarks:        * http://www.ripe.net/whois
+remarks:        ****************************
+
