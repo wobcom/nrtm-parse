@@ -1,6 +1,6 @@
 [package]
 name = "nrtm-parser"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2024"
 license = "MIT"
 description = "(streaming) PEG parser for NRTMv2 and NRTMv3 event streams"
