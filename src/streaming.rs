@@ -203,7 +203,7 @@ netname:        TRANSPORT-NET
     }
 
     #[tokio::test]
-    async fn v3_no_chunks_signalled() {
+    async fn v3_no_delimiter_eof_processed() {
         let mut decoder = NRTMDec::new_v3(TEST_MAX_CHUNK_LEN);
         let mut reader = decoder.get_stream(
             &b"\
@@ -220,9 +220,11 @@ netname:        TRANSPORT-NET
 
         assert_matches!(
             reader.try_next().await,
-            Err(NRTMStreamError::REDelimiterCodec(
-                REDelimiterCodecError::Io(_)
-            ))
+            // should be incomplete, as we have started to match some parts
+            // of a NRTM feed (comments) but we did not encounter an NRTM update.
+            // re delimiter codec should always flush the reader up to last byte,
+            // even in this case.
+            Err(NRTMStreamError::Parser(ParseError::Incomplete))
         );
     }
 
